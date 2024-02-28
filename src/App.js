@@ -1,5 +1,5 @@
-import React from "react";
-import { UncontrolledOnboardingFlow} from "./UncontrolledOnboardingFlow";
+import React, { useState } from "react";
+import { ControlledOnboardingFlow} from "./ControlledOnboardingFlow";
 
 const nameInput = React.createRef();
 const ageInput = React.createRef();
@@ -24,7 +24,15 @@ const StepTwo = ({ goToPrevious, goToNext }) => (
 );
 const StepThree = ({ goToPrevious, goToNext }) => (
 	<>
-	<h1>Step 3: Hair Color</h1>
+	<h1>Step 3: Senior Discount</h1>
+	<p>Congratulations you qualify for our senior discout!!</p>
+	<button onClick={() => goToPrevious({})}>Previous</button>
+	<button onClick={() => goToNext({})}>Next</button>
+	</>
+);
+const StepFour = ({ goToPrevious, goToNext }) => (
+	<>
+	<h1>Step 4: Hair Color</h1>
 	<input name="hairColor" type="text" placeholder="Hair Color" ref={hairColorInput} />
 	<button onClick={() => goToPrevious({ hairColor: hairColorInput.current.value })}>Previous</button>
 	<button onClick={() => goToNext({ hairColor: hairColorInput.current.value })}>Submit</button>
@@ -32,16 +40,35 @@ const StepThree = ({ goToPrevious, goToNext }) => (
 );
 
 function App() {
+	const [onboardingData, setOnboardingData] = useState({});
+    const [currentIndex, setCurrentIndex] = useState(0);
+
+	const onNext = stepData => {
+        setOnboardingData({ ...onboardingData, ...stepData });
+		if (currentIndex < 3) {
+			setCurrentIndex(currentIndex + 1);
+		}
+    }
+
+	const onPrevious = stepData => {
+		setOnboardingData({ ...onboardingData, ...stepData });
+		if (currentIndex > 0) {
+			setCurrentIndex(currentIndex - 1);
+		}
+	}
+
 	return (
 		<>
-		<UncontrolledOnboardingFlow onFinish={data => {
-			console.log('Finished onboarding with data:', data);
-			alert('Finished onboarding with data');
-		}}>
+		<ControlledOnboardingFlow 
+			currentIndex={currentIndex}
+			onNext={onNext}
+			onPrevious={onPrevious}
+		>
 			<StepOne />
 			<StepTwo />
-			<StepThree />
-		</UncontrolledOnboardingFlow>
+			{onboardingData.age >= 62 && <StepThree />}
+			<StepFour />
+		</ControlledOnboardingFlow>
 		</>
 	)
 }
