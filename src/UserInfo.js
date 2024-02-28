@@ -11,5 +11,5 @@ export const UserInfo = ({ user }) => {
 			{hobbies.map(hobby => <li key={hobby}>{hobby}</li>)}
 		</ul>
 		</>
-	) : <p>Loading...</p>;
+	) : <p>Loading User Info...</p>;
 }
