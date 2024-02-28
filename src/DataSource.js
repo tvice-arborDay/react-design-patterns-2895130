@@ -6,7 +6,7 @@ export const DataSource = ({ getDataFunc = () => {}, resourceName, children }) =
 	useEffect(() => {
 		(async () => {
 			const data = await getDataFunc();
-            setState(data);
+			setState(data);
 		})();
 	}, [getDataFunc]);
 
