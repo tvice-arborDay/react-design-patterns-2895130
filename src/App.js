@@ -1,33 +1,49 @@
-import axios from 'axios';
-import { CurrentUserLoader } from './CurrentUserLoader';
-import { UserLoader } from './UserLoader';
-import { DataSource } from './DataSource';
-import { ResourceLoader } from './ResourceLoader';
-import { ProductInfo } from './ProductInfo';
-import { UserInfo } from './UserInfo';
+import React from "react";
+import { UncontrolledOnboardingFlow} from "./UncontrolledOnboardingFlow";
 
-const getServerData = url => async () => {
-	const response = await axios.get(url);
-	return response.data;
-}
+const nameInput = React.createRef();
+const ageInput = React.createRef();
+const hairColorInput = React.createRef();
 
-const getLocalStorageData = key => () => {
-	return localStorage.getItem(key);
-}
 
-const Text = ({ message }) => <h1>{message}</h1>;
+const StepOne = ({ goToPrevious, goToNext }) => (
+	<>
+	<h1>Step 1: Name</h1>
+	<input name="name" type="text" placeholder="Name" ref={nameInput} />
+	<button onClick={() => goToPrevious({ name: nameInput.current.value })}>Previous</button>
+	<button onClick={() => goToNext({ name: nameInput.current.value })}>Next</button>
+	</>
+);
+const StepTwo = ({ goToPrevious, goToNext }) => (
+	<>
+	<h1>Step 2: Age</h1>
+	<input name="age" type="number" placeholder="Age" ref={ageInput} />
+	<button onClick={() => goToPrevious({ age: Number(ageInput.current.value) })}>Previous</button>
+	<button onClick={() => goToNext({ age: Number(ageInput.current.value) })}>Next</button>
+	</>
+);
+const StepThree = ({ goToPrevious, goToNext }) => (
+	<>
+	<h1>Step 3: Hair Color</h1>
+	<input name="hairColor" type="text" placeholder="Hair Color" ref={hairColorInput} />
+	<button onClick={() => goToPrevious({ hairColor: hairColorInput.current.value })}>Previous</button>
+	<button onClick={() => goToNext({ hairColor: hairColorInput.current.value })}>Submit</button>
+	</>
+);
 
 function App() {
 	return (
 		<>
-		<DataSource getDataFunc={getServerData('/users/100')} resourceName="user">
-			<UserInfo />
-		</DataSource>
-		<DataSource getDataFunc={getLocalStorageData('message')} resourceName={'message'}>
-			<Text />
-		</DataSource>
+		<UncontrolledOnboardingFlow onFinish={data => {
+			console.log('Finished onboarding with data:', data);
+			alert('Finished onboarding with data');
+		}}>
+			<StepOne />
+			<StepTwo />
+			<StepThree />
+		</UncontrolledOnboardingFlow>
 		</>
-	);
+	)
 }
 
 export default App;
