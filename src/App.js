@@ -1,11 +1,20 @@
-import { CurrentUserLoader } from "./CurrentUserLoader";
-import { UserInfo } from "./UserInfo";
+import { CurrentUserLoader } from './CurrentUserLoader';
+import { UserLoader } from './UserLoader';
+import { UserInfo } from './UserInfo';
 
 function App() {
 	return (
-		<CurrentUserLoader>
-			<UserInfo/>
-		</CurrentUserLoader>
+		<>
+		<UserLoader>
+			<UserInfo />
+		</UserLoader>
+		{/* <UserLoader userid={'101'}>
+			<UserInfo />
+		</UserLoader>
+		<UserLoader userid={'102'}>
+			<UserInfo />
+		</UserLoader> */}
+		</>
 	);
 }
 
