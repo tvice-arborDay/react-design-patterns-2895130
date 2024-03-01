@@ -1,17 +1,28 @@
-import { ProductInfo } from "./ProductInfo";
-import { UserInfo } from "./UserInfo";
+const nestedObject = {
+	a: 1,
+	b: {
+		b1: 4,
+		b2: {
+			b23: 'Hello',
+		},
+		b3: {
+			b31: {
+				message: 'Hi',
+			},
+			b32: {
+				message: 'Hi',
+			}
+		}
+	},
+	c: {
+		c1: 2,
+		c2: 3,
+	}
+}
 
 function App() {
 	return (
-		<>
-		<UserInfo userId={'100'} />
-		<UserInfo userId={'101'} />
-		<UserInfo userId={'102'} />
-		<hr/>
-		<ProductInfo productId={'2000'} />
-		<ProductInfo productId={'2001'} />
-		<ProductInfo productId={'2002'} />
-		</>
+		<h1>Your code goes here</h1>
 	);
 }
 
