@@ -1,13 +1,17 @@
-import { printProps } from "./printProps";
+import { ProductInfo } from "./ProductInfo";
 import { UserInfo } from "./UserInfo";
-import { withUser } from "./withUser";
-import { UserInfoForm } from "./UserInfoForm";
-
-const UserInfoWithLoader = withUser(UserInfo, '100');
 
 function App() {
 	return (
-		<UserInfoForm/>
+		<>
+		<UserInfo userId={'100'} />
+		<UserInfo userId={'101'} />
+		<UserInfo userId={'102'} />
+		<hr/>
+		<ProductInfo productId={'2000'} />
+		<ProductInfo productId={'2001'} />
+		<ProductInfo productId={'2002'} />
+		</>
 	);
 }
 
